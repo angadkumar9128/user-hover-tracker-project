@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Product Tracking</title>
+<style>
+body{font-family:Arial;padding:40px}
+.product-card{display:inline-block;border:1px solid #ccc;padding:20px;margin:10px;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>Products</h1>
+
+<div class="product-card" data-product-id="P001" data-product-name="Gaming Laptop">Gaming Laptop</div>
+<div class="product-card" data-product-id="P002" data-product-name="Smartphone">Smartphone</div>
+
+<script>
+document.querySelectorAll(".product-card").forEach(card=>{
+ card.addEventListener("mouseenter", async ()=>{
+   await fetch("/api/track-hover",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        productId:card.dataset.productId,
+        productName:card.dataset.productName,
+        pageUrl:location.href
+      })
+   });
+ });
+});
+</script>
+</body>
+</html>
